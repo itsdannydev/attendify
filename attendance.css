@@ -1,0 +1,70 @@
+html,body{
+    height: 100vh;
+    width: 100vw;
+}
+body{
+    display: flex;
+    flex-direction: column;
+}
+nav{
+    min-height: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 1px 15px var(--white3);
+    padding: 0 15% 0 15%;
+    box-sizing: border-box;
+}
+nav > h1{
+    font-size: 2rem;
+}
+nav > span{
+    font-size: 1.5rem;
+}
+body > div{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+#attendance-container {
+    height: fit-content;
+    width: min(80%,1200px);
+    margin: 40px auto;
+    border: solid var(--black2) 5px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+#attendance-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    color: var(--white);
+    font-family: inherit;
+}
+#attendance-table tr.even{
+    background-color: var(--black3);
+}
+#attendance-table tr.odd{
+    background-color: var(--black4);
+}
+#attendance-table th,
+#attendance-table td {
+    padding: 10px;
+}
+#attendance-table th {
+    background-color: var(--black2);
+    font-size: 1.3rem;
+    font-weight: 1000;
+}
+#attendance-table td{
+    font-size: 1rem;
+}
+
+.attendance-toggle {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
