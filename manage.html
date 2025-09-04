@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Participants</title>
+
+    <link rel="stylesheet" href="./global.css">
+    <link rel="stylesheet" href="./manage.css">
+</head>
+<body>
+    <nav>
+        <h1>Attendify</h1>
+        <span>Myth Busters</span>
+    </nav>
+    <div>
+        <div id="input-type">
+            <span class="selected">Upload CSV</span>
+            <span>Manual Entry</span>
+        </div>
+        <form id="participant-form">
+            <div id="csv-input" class="hifde">
+                <label>
+                    Choose a CSV file
+                    <input type="file" accept=".csv,text/csv">
+                </label>
+            </div>
+            <div id="manual-input" class="hifde">
+                <label id="name-label">
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" height="30" width="30" viewBox="0 0 640 640">
+                            <path d="M320 312C386.3 312 440 258.3 440 192C440 125.7 386.3 72 320 72C253.7 72 200 125.7 200 192C200 258.3 253.7 312 320 312zM290.3 368C191.8 368 112 447.8 112 546.3C112 562.7 125.3 576 141.7 576L498.3 576C514.7 576 528 562.7 528 546.3C528 447.8 448.2 368 349.7 368L290.3 368z"/>
+                        </svg>
+                    </div>
+                    <input type="text" name="name" placeholder="Name" required>
+                </label>
+                <label>
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" height="40" width="40" viewBox="0 0 640 640">
+                            <path d="M96 96C60.7 96 32 124.7 32 160L32 480C32 515.3 60.7 544 96 544L544 544C579.3 544 608 515.3 608 480L608 160C608 124.7 579.3 96 544 96L96 96zM176 352L240 352C284.2 352 320 387.8 320 432C320 440.8 312.8 448 304 448L112 448C103.2 448 96 440.8 96 432C96 387.8 131.8 352 176 352zM152 256C152 225.1 177.1 200 208 200C238.9 200 264 225.1 264 256C264 286.9 238.9 312 208 312C177.1 312 152 286.9 152 256zM392 208L504 208C517.3 208 528 218.7 528 232C528 245.3 517.3 256 504 256L392 256C378.7 256 368 245.3 368 232C368 218.7 378.7 208 392 208zM392 304L504 304C517.3 304 528 314.7 528 328C528 341.3 517.3 352 504 352L392 352C378.7 352 368 341.3 368 328C368 314.7 378.7 304 392 304z"/>
+                        </svg>
+                    </div>
+                    <input type="text" name="reg-num" placeholder="Reg No:" required>
+                </label>
+                <label>
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" height="40" width="40" viewBox="0 0 640 640">
+                            <path d="M224.2 89C216.3 70.1 195.7 60.1 176.1 65.4L170.6 66.9C106 84.5 50.8 147.1 66.9 223.3C104 398.3 241.7 536 416.7 573.1C493 589.3 555.5 534 573.1 469.4L574.6 463.9C580 444.2 569.9 423.6 551.1 415.8L453.8 375.3C437.3 368.4 418.2 373.2 406.8 387.1L368.2 434.3C297.9 399.4 241.3 341 208.8 269.3L253 233.3C266.9 222 271.6 202.9 264.8 186.3L224.2 89z"/>
+                        </svg>
+                    </div>
+                    <input type="number" name="phoneno" placeholder="Phone No:">
+                </label>
+            </div>
+            <button id="participant-form-submit-btn" type="submit">Add Participant(s)</button>
+        </form>
+    </div>
+</body>
+</html>

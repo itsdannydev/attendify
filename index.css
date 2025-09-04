@@ -120,11 +120,11 @@ nav{
 .manage, .edit{
     flex: 1;
     margin: 5px 0 5px 0;
-    background-color: var(--white3);
+    background-color: var(--white1);
     transition: background-color 0.3s ease-in-out;
 }
 .manage:hover, .edit:hover{
-    background-color: rgb(190, 190, 190);
+    background-color: var(--white3);
 }
 .manage{
     margin-left: 5px;
@@ -138,7 +138,7 @@ nav{
     width: 100%;
     margin: 0 5px 5px 5px;
     background-color: hsl(240, 100%, 65%);
-    color: white;
+    color: var(--white1);
     transition: background-color 0.2s ease-in-out;
 }
 .attendance:hover{

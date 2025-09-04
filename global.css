@@ -1,21 +1,26 @@
 :root {
-    --black5: hsl(0,0%,0%);
-    --black4: hsl(0,0%,2%);
-    --black3: hsl(0,0%,5%);
-    --black2: hsl(0,0%,7%);
-    --black1: hsl(0,0%,10%);
+    --black1: hsl(0, 0%, 5%);
+    --black2: hsl(0, 0%, 10%);
+    --black3: hsl(0, 0%, 15%);
+    --black4: hsl(0, 0%, 20%);
+    --black5: hsl(0, 0%, 25%);
 
-    --white5: hsl(0,0%,100%);
-    --white4: hsl(0,0%,98%);
-    --white3: hsl(0,0%,95%);
-    --white2: hsl(0,0%,93%);
-    --white1: hsl(0,0%,90%);
+    --white1: hsl(0, 0%, 95%);
+    --white2: hsl(0, 0%, 90%);
+    --white3: hsl(0, 0%, 85%);
+
+    --accent: rgb(120, 240, 240);
+    --accentno: 120, 240, 240;
+}
+*{
+    margin: 0;
+    padding: 0;
 }
 body{
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     font-size: 8px;
-    background-color: var(--black3);
-    color: var(--white3);
+    background-color: var(--black1);
+    color: var(--white1);
 }
 .hide{
     display: none !important;
@@ -25,12 +30,12 @@ body{
     width: 15px;
   }
   *::-webkit-scrollbar-track {
-    background: var(--black3);
+    background: var(--black1);
   }
   *::-webkit-scrollbar-thumb {
     background-color: grey;
     border-radius: 10px;
-    border: 3px solid var(--black3);
+    border: 3px solid var(--black1);
   }
   *::-webkit-scrollbar-thumb:hover {
     background-color: rgb(85, 85, 85);

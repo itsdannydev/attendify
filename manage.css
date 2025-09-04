@@ -1,0 +1,139 @@
+html,body{
+    height: 100vh;
+    width: 100vw;
+}
+body{
+    display: flex;
+    flex-direction: column;
+}
+nav{
+    min-height: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 1px 15px var(--white3);
+    padding: 0 15% 0 15%;
+    box-sizing: border-box;
+}
+nav > h1{
+    font-size: 2rem;
+}
+nav > span{
+    font-size: 1.5rem;
+}
+body > div{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+#input-type{
+    height: 60px;
+    width: min(90%,700px);
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 10px;
+    background-color: var(--black2);
+    border-radius: 8px;
+}
+#input-type > span{
+    height: 30px;
+    width: 45%;
+    display: grid;
+    place-items: center;
+    font-size: 0.8rem;
+    padding: 5px;
+    border-radius: 8px;
+}
+#input-type > span.selected{
+    background-color: var(--black3);
+}
+#participant-form{
+    height: fit-content;
+    width: min(90%,700px);
+    padding: 30px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    background-color: var(--black2);
+    border-radius: 10px;
+}
+#csv-input{
+    width: 80%;
+    height: 70px;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: var(--black3);
+    border-radius: 10px;
+    font-size: 1rem;
+    font-family: inherit;
+    font-weight: 600;
+    display: grid;
+    place-items: center;
+}
+#csv-input input::file-selector-button{
+    border: none;
+    height: 25px;
+    width: 100px;
+    border-radius: 8px;
+    background-color: var(--white3);
+}
+#manual-input{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+#manual-input > label{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+}
+#manual-input > label div{
+    aspect-ratio: 1/1;
+    height: 50px;
+    background-color: var(--black1);
+    display: grid;
+    place-items: center;
+    border-radius: 8px 0 0 8px;
+}
+#manual-input > label svg{
+    fill: var(--black5);
+}
+#manual-input input{
+    flex: 1;
+    min-width: 0;
+    border: solid transparent 4px;
+    border-radius: 0 8px 8px 0;
+    padding-left: 15px;
+    font-family: inherit;
+}
+#manual-input input:focus{
+    border: solid var(--black1) 4px;
+    outline: none;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+#participant-form-submit-btn{
+    width: 80%;
+    height: 30px;
+    border: none;
+    border-radius: 8px;
+    font-family: inherit;
+    background-color: var(--accent);
+    transition: background-color 0.3s ease-in-out,
+                transform 0.3s ease-in-out;
+}
+#participant-form-submit-btn:hover{
+    background-color: rgba(var(--accentno),0.8);
+    transform: scaleY(1.1);
+}
