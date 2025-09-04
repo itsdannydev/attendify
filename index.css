@@ -1,0 +1,146 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+html,body{
+    height: 100%;
+    width: 100%;
+}
+body{
+    display: flex;
+    flex-direction: column;
+}
+nav{
+    width: 100%;
+    min-height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+}
+#events{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+#events-header{
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 50px 0 50px;
+    font-size: 2rem;
+    font-weight: 800;
+}
+#create-event{
+    height: 35px;
+    width: 100px;
+    border: none;
+    border-radius:8px;
+    font-size: 1.2rem;
+    font-family: 'Courier New', Courier, monospace;
+    background-color: hsl(130, 70%, 50%);
+    transition: background-color 0.3s ease-in-out,
+                transform 0.3s ease-in-out;
+}
+#create-event:hover{
+    background-color: hsl(130, 70%, 40%);
+    transform: scale(1.05);
+}
+#events-body{
+    flex: 1;
+    min-width: 0px;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 50px;
+    box-sizing: border-box;
+    gap:30px;
+    justify-content: center;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.event-card, #create-event-card{
+    height: 400px;
+    min-width: 300px;
+    border: solid var(--white1) 1px;
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
+}
+.event-card:hover, #create-event-card:hover{
+    transform: scale(1.1);
+}
+#create-event-card{
+    font-size: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border: dashed;
+}
+.event-card{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.info-container{
+    height: 70%;
+    width: 80%;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    text-align: center;
+}
+.info-container h4{
+    font-size: 2.5rem;
+}
+.info-container p{
+    font-size: 1rem;
+}
+.info-container span{
+    font-size: 2rem;
+}
+.btn-container{
+    height: 30%;
+    width: 80%;
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.btn-container button{
+    border-radius: 7px;
+    border: none;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 500;
+}
+.manage, .edit{
+    flex: 1;
+    margin: 5px 0 5px 0;
+    background-color: var(--white3);
+    transition: background-color 0.3s ease-in-out;
+}
+.manage:hover, .edit:hover{
+    background-color: rgb(190, 190, 190);
+}
+.manage{
+    margin-left: 5px;
+    margin-right: 2.5px;
+}
+.edit{
+    margin-left: 2.5px;
+    margin-right: 5px;
+}
+.attendance{
+    width: 100%;
+    margin: 0 5px 5px 5px;
+    background-color: hsl(240, 100%, 65%);
+    color: white;
+    transition: background-color 0.2s ease-in-out;
+}
+.attendance:hover{
+    background-color: hsl(240, 100%, 70%);
+}
