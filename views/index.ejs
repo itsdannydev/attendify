@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendify</title>
+    
+    <link rel="stylesheet" href="./global.css">
+    <link rel="stylesheet" href="./index.css">
+    <link rel="stylesheet" href="./components/create-event-popup.css">
+
+    <script src="./components/create-event-popup.js" defer></script>
+    <script src="./index.js" defer></script>
+</head>
+<body>
+    <nav>
+        <h1>ATTENDIFY</h1>
+    </nav>
+    <div id="events">
+        <div id="events-header">
+            EVENTS LIST:
+            <button id="create-event">Create</button>
+        </div>
+        <div id="events-body">
+            <div id="create-event-card" class="hide">
+                No Events Created
+                <br>
+                Create A New Event
+            </div>
+            <!-- <div class="event-card">
+                <div class="info-container">
+                    <h4>Myth Busters</h4>
+                    <p>Created At: 04/09/2025</p>
+                    <span>Participants: 250</span>
+                </div>
+                <div class="btn-container">
+                    <button class="manage">Manage</button>
+                    <button class="edit">Edit</button>
+                    <button class="attendance">Attendance</button>
+                </div>
+            </div> -->
+        </div>
+    </div>
+    <%- include('components/create-event-popup') %>
+</body>
+</html>
