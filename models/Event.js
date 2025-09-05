@@ -5,18 +5,16 @@ const eventSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    users: [
-        {
-            adminPass: {
-                type: String,
-                required: true
-            },
-            ocPass: {
-                type: String,
-                required: true
-            }
+    users: {
+        adminPass: {
+            type: String,
+            required: true
+        },
+        ocPass: {
+            type: String,
+            required: true
         }
-    ],
+    },
     attendanceLocked:{
         type: Boolean,
         required: true,
@@ -43,6 +41,10 @@ const eventSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now()
+    },
+    contact: {
+        type: String,
+        required: true
     }
 })
 

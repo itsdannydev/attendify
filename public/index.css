@@ -17,6 +17,7 @@ nav{
     justify-content: center;
     align-items: center;
     font-size: 2rem;
+    box-shadow: 0 1px 15px var(--white3);
 }
 #events{
     flex: 1;
@@ -29,7 +30,7 @@ nav{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0 min(150px,15%) 0 min(150px,15%);
+    margin: 20px min(150px,15%) 0 min(150px,15%);
     font-size: 2rem;
     font-weight: 800;
 }

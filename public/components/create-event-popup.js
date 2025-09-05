@@ -15,9 +15,28 @@ createEventForm.addEventListener('submit',async (e)=>{
     const contact = document.getElementById('contact');
 
     try{
-        
+        const res = await fetch('/new-event',{
+            method: "POST",
+            headers:{ 'Content-Type':'application/json'},
+            body:JSON.stringify({
+                eventTitle: eventTitle.value,
+                adminPass: adminPass.value,
+                ocPass: ocPass.value,
+                contact: contact.value
+            })
+        })
+
+        const data = await res.json();
+        if(data.success){
+            notify(`New event "${eventTitle.value}" successfully created!`);
+            closePopup();
+            getEvents();
+        } else {
+            notify(`Event Creation Failed: ${data.message} (Server)`);
+        }
     }catch(err){
-        console.log("Error creating the event");
+        console.log("Error creating the event",err);
+        notify("ERROR CREATING EVENT");
     }finally{
         isSubmitting = false;
     }
@@ -45,7 +64,6 @@ const popupInputs = document.querySelectorAll('.popup-inputs');
 popupInputs.forEach( input => {
     const popupSpan = input.previousElementSibling;
     function updateState(){
-        console.log('sibling is ',popupSpan);
         if(input === document.activeElement || input.value.trim() !== '' ){
             popupSpan.classList.add('activated');
         } else {

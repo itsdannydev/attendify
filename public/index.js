@@ -1,14 +1,20 @@
+//global DOM elems
+const createEvent = document.getElementById('create-event');
+const createEventCard = document.getElementById('create-event-card');
+
 //fetching and adding events data
 async function getEvents(){
     try{
         const res = await fetch('/events-data');
         const data = await res.json();
         console.log('Event details fetched');
+        notify('Events Loaded');
         
+        console.log(createEventCard)
         if(data.events.length == 0){
-            const createEventCard = document.getElementById('create-event-card')
             createEventCard.classList.remove('hide');
         } else {
+            createEventCard.classList.add('hide');
             showEvents(data.events);
         }
     }catch(err){
@@ -18,14 +24,13 @@ async function getEvents(){
 getEvents();
 
 //popup toggle
-const createEvent = document.getElementById('create-event');
-const createEventCard = document.getElementById('create-event-card');
 createEvent.addEventListener('click',openPopup);
 createEventCard.addEventListener('click',openPopup);
 
 //functions
 function showEvents(events){
     const eventsBody = document.getElementById('events-body');
+    eventsBody.innerHTML='';
         events.forEach( event => {
             const eventCard = document.createElement('div');
             eventCard.classList.add('event-card');
