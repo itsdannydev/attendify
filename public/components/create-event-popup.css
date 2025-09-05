@@ -102,7 +102,7 @@
 }
 #popup form label p{
     position: absolute;
-    bottom: -17px;
+    bottom: -20px;
     left: 15px;
     font-size: 0.7rem;
 }
@@ -120,4 +120,9 @@
 #popup form button:hover{
     transform: scaleY(1.1);
     background-color: var(--white3);
+}
+@media(max-width:750px){
+    #popup form label p{
+        bottom: -30px;
+    }
 }
