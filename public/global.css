@@ -11,8 +11,8 @@
     --white4: hsl(0, 0%, 80%);
     --white5: hsl(0, 0%, 75%);
 
-    --accent: rgb(120, 240, 240);
-    --accentno: 120, 240, 240;
+    --blackno: 13, 13, 13;
+    --whiteno: 242, 242, 242;
 }
 *{
     margin: 0;
@@ -23,6 +23,7 @@ body{
     font-size: 8px;
     background-color: var(--black1);
     color: var(--white1);
+    position: relative;
 }
 .hide{
     display: none !important;
@@ -42,3 +43,36 @@ body{
   *::-webkit-scrollbar-thumb:hover {
     background-color: rgb(85, 85, 85);
   }
+
+/* ---------------NOTIFICATIONS--------------- */
+#notification-container{
+  height: 100%;
+  width: min(50%,500px);
+  position: fixed;
+  right: 0;
+  pointer-events: none;
+}
+.notifications{
+  position: absolute;
+  bottom: 20px;
+  height: fit-content;
+  width: 80%;
+  background-color: rgba(var(--blackno),0.8);
+  backdrop-filter: blur(10px);
+  margin-right: 20px;
+  margin-bottom: 20px;
+  padding: 10px;
+  font-size: 1rem;
+  font-family: inherit;
+  border: solid var(--black4) 5px;
+  border-radius: 15px 15px 0 15px;
+  transform: translateX(450px);
+  opacity: 0;
+  transition: transform 0.5s ease-in-out, 
+              opacity 0.5s ease-in-out, 
+              bottom 0.5s ease-in-out;
+}
+.notifications.animate{
+  transform: translateX(0);
+  opacity: 1;
+}
