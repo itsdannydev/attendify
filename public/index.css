@@ -29,13 +29,14 @@ nav{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0 50px 0 50px;
+    margin: 0 min(150px,15%) 0 min(150px,15%);
     font-size: 2rem;
     font-weight: 800;
 }
 #create-event{
     height: 35px;
     width: 100px;
+    flex-shrink: 0;
     border: none;
     border-radius:8px;
     font-size: 1.2rem;
