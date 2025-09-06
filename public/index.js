@@ -24,10 +24,10 @@ getEvents();
 
 //popup toggle
 createEvent.addEventListener('click',()=>{
-    popupForm();
+    showPopup("auth");
 });
 createEventCard.addEventListener('click',()=>{
-    popupForm();
+    showPopup("create");
 });
 
 //functions

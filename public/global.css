@@ -77,3 +77,48 @@ body{
   transform: translateX(0);
   opacity: 1;
 }
+/* ----------------GLOBAL POPUP STYLES---------------- */
+#popup-bg{
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  background-color: hsla(0, 0%, 0%, 0.5);
+  backdrop-filter: blur(10px);
+}
+#popup{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  height: fit-content;
+  width: min(600px,60%);
+  min-width: 300px;
+  background-color: var(--black2);
+  font-family: inherit;
+  border: solid var(--black4) 5px;
+  border-radius: 15px;
+  display: grid;
+  place-items: center;
+}
+#popup > span{
+  aspect-ratio: 1/1;
+  height: 20px;
+  position: absolute;
+  top: 2%;
+  right: 2%;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--white5);
+}
+#popup > span:hover{
+  color: rgb(240, 70, 70);
+  cursor: pointer;
+}
+#popup > #popup-body{
+  width: 100%;
+}
+#popup input:disabled{
+  background-color: var(--black3);
+  font-style: italic;
+}

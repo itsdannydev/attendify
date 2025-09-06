@@ -14,7 +14,7 @@ app.get('/',(req,res)=>{
     res.render('index');
 });
 
-//--------------API ENDPOINTS--------------
+//--------------------------------API ENDPOINTS--------------------------------
 const Event = require('./models/Event');
 //GET Requests
 app.get('/events-data',async (req,res)=>{
@@ -63,6 +63,8 @@ app.post('/new-event', async (req,res)=>{
         res.json({ success:false, message:"Event Creation Failed" });
     }
 })
+
+
 
 const port = 3000
 app.listen(port, ()=>{

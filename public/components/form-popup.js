@@ -1,74 +1,105 @@
-//global DOM elems
-const popupBg = document.getElementById('popup-bg');
-const popup = document.getElementById('popup');
-const close = document.getElementById('close');
-const eventForm = document.getElementById('event-form');
-
 //funcitons
 function openPopup(){
     popupBg.classList.remove('hide');
 }
 function closePopup(){
     popupBg.classList.add('hide');
+    popupForm.innerHTML='';
 }
-function popupForm(event){
-    console.log(event);
-    if(!event){
-        //create event popup
-        eventForm.innerHTML = `
-            <h4>Create Event</h4>
-            <hr>
-            <div>
-                <label>
-                    <span>Event Title</span>
-                    <input id="event-title" class="popup-inputs" type="text" required>
-                </label>
-                <label>
-                    <span>Admin Password</span>
-                    <input id="admin-pass" class="popup-inputs" type="text" required>
-                </label>
-                <label>
-                    <span>OC Password</span>
-                    <input id="oc-pass" class="popup-inputs" type="text" required>
-                </label>
-                <label>
-                    <span>Email/Phone</span>
-                    <input id="contact" class="popup-inputs" type="text" required>
-                    <p>*This contact will be used in case you forgot any of the passwords</p>
-                </label>
-                <button type="submit">CREATE NEW EVENT</button>
-            </div>
-        `
-    }else{
-        //edit event popup
-        eventForm.innerHTML = `
-            <h4>Edit Event event.title</h4>
-            <hr>
-            <div>
-                <label>
-                    <span>event.title</span>
-                    <input id="event-title" class="popup-inputs" type="text" required>
-                </label>
-                <label>
-                    <span>New Admin Password</span>
-                    <input id="admin-pass" class="popup-inputs" type="text" required>
-                </label>
-                <label>
-                    <span>New OC Password</span>
-                    <input id="oc-pass" class="popup-inputs" type="text" required>
-                </label>
-                <label>
-                    <p>*Contact of an event can't be edited</p>
-                </label>
+function showPopup(type){
+    switch(type){
+        case "create":{
+            //create event popup
+            popupForm.innerHTML = `
+                <h4>Create Event</h4>
+                <hr>
+                <div>
+                    <label>
+                        <span>Event Title</span>
+                        <input id="event-title" class="popup-inputs" type="text" required>
+                    </label>
+                    <label>
+                        <span>Admin Password</span>
+                        <input id="admin-pass" class="popup-inputs" type="text" required>
+                    </label>
+                    <label>
+                        <span>OC Password</span>
+                        <input id="oc-pass" class="popup-inputs" type="text" required>
+                    </label>
+                    <label>
+                        <span>Email/Phone</span>
+                        <input id="contact" class="popup-inputs" type="text" required>
+                        <p>*This contact will be used in case you forgot any of the passwords</p>
+                    </label>
+                    <button type="submit">CREATE NEW EVENT</button>
+                </div>
+            `
+
+            break;
+        }
+        case "edit":{
+            //edit event popup
+            popupForm.innerHTML = `
+                <h4>Edit Event event.title</h4>
+                <hr>
+                <div>
+                    <label>
+                        <span>event.title</span>
+                        <input id="event-title" class="popup-inputs" type="text" required>
+                    </label>
+                    <label>
+                        <span>New Admin Password</span>
+                        <input id="admin-pass" class="popup-inputs" type="text" required>
+                    </label>
+                    <label>
+                        <span>New OC Password</span>
+                        <input id="oc-pass" class="popup-inputs" type="text" required>
+                    </label>
+                    <label>
+                        <input disabled class="popup-inputs" type="text" value="*Contact of an event can't be edited">
+                    </label>
+                </div>
                 <button type="submit">SAVE CHANGES</button>
-            </div>
-        `
+            `
+            
+            break;
+        }
+        case "adminAuth":{
+            //verify admin login
+            popupForm.innerHTML = `
+                <h4>Admin Authentication</h4>
+                <hr>
+                <div>
+                    <label>
+                        <span>Admin Password</span>
+                        <input id="admin-pass" class="popup-inputs" type="text" required>
+                    </label>
+                    
+                </div>
+                <button type="submit">VERIFY</button>
+            `
+
+            break;
+        }
+        case "auth":{
+            //authentication
+            popupForm.innerHTML = `
+                <h4>Authentication</h4>
+                <hr>
+                <div>
+                    <label>
+                        <span>Enter Password</span>
+                        <input id="password" class="popup-inputs" type="text" required>
+                    </label>
+                </div>
+                <button type="submit">VERIFY</button>
+            `
+        }
     }
+
     openPopup();
 
 
-
-    
     //Event Listners
     //close popup
     close.addEventListener('click', closePopup);
@@ -91,9 +122,9 @@ function popupForm(event){
         input.addEventListener('blur', updateState);
         input.addEventListener('input', updateState);
     })
-    //form submition
+    //--------------------FORM SUBMITION--------------------
     let isSubmitting = false;
-    eventForm.addEventListener('submit',async (e)=>{
+    popupForm.addEventListener('submit',async (e)=>{
         if(isSubmitting)return;
         isSubmitting = true;
 
@@ -136,7 +167,7 @@ function popupForm(event){
         }else{
             //edit form logic
             try{
-                const res = await fetch('/edit-event/event.id',{
+                const res = await fetch(`/edit-event/${type.id}`,{
                     method: "POST",
                     headers:{ 'Content-Type':'application/json'},
                     body:JSON.stringify({

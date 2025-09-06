@@ -1,3 +1,10 @@
+//global DOM elems
+const popupBg = document.getElementById('popup-bg');
+const popup = document.getElementById('popup');
+const close = document.getElementById('close');
+const popupForm = document.getElementById('popup-form');
+
+
 // --------------NOTIFICATIONS--------------
 // Notification container
 const notficationContainer = document.createElement('div');

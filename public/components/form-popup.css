@@ -1,40 +1,3 @@
-#popup-bg{
-    height: 100vh;
-    width: 100vw;
-    position: fixed;
-    background-color: hsla(0, 0%, 0%, 0.5);
-    backdrop-filter: blur(10px);
-}
-#popup{
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    translate: -50% -50%;
-    height: fit-content;
-    width: min(600px,60%);
-    min-width: 300px;
-    background-color: var(--black2);
-    font-family: inherit;
-    border: solid var(--black4) 5px;
-    border-radius: 15px;
-    display: grid;
-    place-items: center;
-}
-#popup > span{
-    aspect-ratio: 1/1;
-    height: 20px;
-    position: absolute;
-    top: 2%;
-    right: 2%;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 20px;
-    font-weight: 900;
-    color: var(--white5);
-}
-#popup > span:hover{
-    color: rgb(240, 70, 70);
-    cursor: pointer;
-}
 #popup form{
     height: 100%;
     width: 100%;
@@ -62,7 +25,6 @@
     justify-content: center;
     align-items: center;
     gap: 20px;
-    margin-bottom: 20px;
 }
 #popup form label{
     position: relative;
@@ -107,8 +69,15 @@
     left: 15px;
     font-size: 0.7rem;
 }
-#popup form button{
+#popup form > button{
+    /* for normal Popups */
+    width: 80%;
+}
+#popup form > div > button{
+    /* for create event popup (special case - with comment for contact input) */
     width: 100%;
+}
+#popup form button{
     height: 30px;
     border-radius: 8px;
     border: none;
