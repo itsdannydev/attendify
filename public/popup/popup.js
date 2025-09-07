@@ -1,5 +1,5 @@
-import { notify } from '../global.js'
 import { createEventTemplate } from "./templates.js";
+import { handleCreate, handleEdit, handleAdminAuth, handleAuth } from './popupHandler.js';
 
 //global DOM elems
 const popupBg = document.getElementById('popup-bg');
@@ -19,8 +19,7 @@ export function showPopup(type,event){
     popupForm.innerHTML = createEventTemplate(type,event);
 
     openPopup();
-
-
+    
     //Event Listners
     //close popup
     close.addEventListener('click', closePopup);
@@ -46,158 +45,41 @@ export function showPopup(type,event){
     //--------------------FORM SUBMITION--------------------
     let isSubmitting = false;
     popupForm.addEventListener('submit',async (e)=>{
+        e.preventDefault();
+        
         if(isSubmitting)return;
         isSubmitting = true;
 
-        e.preventDefault();
+        try{
+            //inputs
+            const eventTitle = document.getElementById('event-title');
+            const adminPass = document.getElementById('admin-pass');
+            const ocPass = document.getElementById('oc-pass');
+            const contact = document.getElementById('contact');
+            const password = document.getElementById('password')
 
-
-        switch(type){
-            case "create":{
-                //create form logic
-
-                //inputs
-                const eventTitle = document.getElementById('event-title');
-                const adminPass = document.getElementById('admin-pass');
-                const ocPass = document.getElementById('oc-pass');
-                const contact = document.getElementById('contact');
-
-                try{
-                    const res = await fetch('/new-event',{
-                        method: "POST",
-                        headers:{ 'Content-Type':'application/json'},
-                        body:JSON.stringify({
-                            eventTitle: eventTitle.value,
-                            adminPass: adminPass.value,
-                            ocPass: ocPass.value,
-                            contact: contact.value
-                        })
-                    })
-                
-                    const data = await res.json();
-                    if(data.success){
-                        notify(`New event "${eventTitle.value}" successfully created!`);
-                        closePopup();
-                        getEvents();
-                    } else {
-                        notify(`Event Creation Failed: ${data.message} (Server)`);
-                    }
-                }catch(err){
-                    console.log("Error creating the event",err);
-                    notify("ERROR CREATING EVENT");
-                }finally{
-                    isSubmitting = false;
+            switch(type){
+                case "create": {
+                    await handleCreate(eventTitle, adminPass, ocPass,contact);
+                    break;
                 }
-
-                break;
-            }
-            case "edit":{
-                //edit form logic
-
-                //inputs
-                const eventTitle = document.getElementById('event-title');
-                const adminPass = document.getElementById('admin-pass');
-                const ocPass = document.getElementById('oc-pass');
-
-                try{
-                    const res = await fetch(`/edit-event/${type.id}`,{
-                        method: "POST",
-                        headers:{ 'Content-Type':'application/json'},
-                        body:JSON.stringify({
-                            eventTitle: eventTitle.value,
-                            adminPass: adminPass.value,
-                            ocPass: ocPass.value
-                        })
-                    })
-                
-                    const data = await res.json();
-                    if(data.success){
-                        notify(`New event "${eventTitle.value}" successfully created!`);
-                        closePopup();
-                        getEvents();
-                    } else {
-                        notify(data.message);
-                    }
-                }catch(err){
-                    console.log("Error creating the event",err);
-                    notify("ERROR CREATING EVENT");
-                }finally{
-                    isSubmitting = false;
+                case 'edit':{
+                    await handleEdit(eventTitle, adminPass, ocPass, event);
+                    break;
                 }
-
-                break;
-            }
-            case "adminAuth":{
-                //admin authentication logic
-                //input
-                const adminPass = document.getElementById('admin-pass')
-
-                try{
-                    const res = await fetch('/adminAuth',{
-                        method:"POST",
-                        headers:{ 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ 
-                            adminPass: adminPass.value,
-                            eventId: event.id
-                        })
-                    })
-
-                    const data = await res.json();
-                    if(data.success){
-                        notify(data.message);
-                        setTimeout(()=>{
-                            notify(data.message2);
-                        },1000);
-                        closePopup();
-                    }else{
-                        console.log(data.message);
-                        notify(data.message);
-                    }
-                }catch(err){
-                    console.log('Error verifying admin authentication: ',err.message);
-                    notify(`Error verifying admin authentication: ${err.message}`);
-                }finally{
-                    isSubmitting = false;
+                case 'adminAuth':{
+                    await handleAdminAuth(adminPass.value, event);
+                    break;
                 }
-
-                break;
-            }
-            case "auth":{
-                //authentication logic
-
-                //input
-                const password = document.getElementById('password')
-
-                try{
-                    const res = await fetch('/auth',{
-                        method:"POST",
-                        headers:{ 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ 
-                            password: password.value,
-                            eventId: event.id
-                        })
-                    })
-
-                    const data = await res.json();
-                    if(data.success){
-                        notify(data.message);
-                        setTimeout(()=>{
-                            notify(data.message2);
-                        },1000);
-                        closePopup();
-                    }else{
-                        console.log(data.message);
-                        notify(data.message);
-                    }
-                }catch(err){
-                    console.log('Error verifying authentication: ',err.message);
-                    notify(`Error verifying authentication: ${err.message}`);
-                }finally{
-                    isSubmitting = false;
+                case 'auth':{
+                    await handleAuth(password.value, event);
+                    break;
                 }
-
-                break;
             }
+        }catch(err){
+            console.log("Error handling create-popup: ",err.message);
+        }finally {
+            isSubmitting = false;
         }
 
     })
