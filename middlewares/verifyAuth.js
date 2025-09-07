@@ -3,7 +3,8 @@ const jwt = require('jsonwebtoken');
 function verifyAuth(req,res,next){
     const token = req.cookies.authCookie;
     if(!token){
-        return res.json({ success: false, message: "No authentication token provided" })
+        return res.redirect('/');
+        // return res.json({ success: false, message: "No authentication token provided" })
     }
 
     try{
@@ -12,7 +13,8 @@ function verifyAuth(req,res,next){
         next();
     }catch(err){
         console.log("JWT verification error: ",err.message);
-        return res.json({ success:false, message:"Invalid or Expired Token" })
+        return res.redirect('/');
+        // return res.json({ success:false, message:"Invalid or Expired Token" })
     }
 }
 

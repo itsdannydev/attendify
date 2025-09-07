@@ -6,21 +6,17 @@ body{
     display: flex;
     flex-direction: column;
 }
-nav{
+/* nav{
     min-height: 100px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 1px 15px var(--white3);
     padding: 0 15% 0 15%;
-    box-sizing: border-box;
-}
-nav > h1{
     font-size: 2rem;
-}
-nav > span{
-    font-size: 1.5rem;
-}
+    box-sizing: border-box;
+    color: var(--white1) !important;
+} */
 body > div{
     height: 100%;
     width: 100%;

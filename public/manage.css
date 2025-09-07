@@ -6,21 +6,17 @@ body{
     display: flex;
     flex-direction: column;
 }
-nav{
+/* nav{
     min-height: 100px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     box-shadow: 0 1px 15px var(--white3);
     padding: 0 15% 0 15%;
     box-sizing: border-box;
-}
-nav > h1{
     font-size: 2rem;
-}
-nav > span{
-    font-size: 1.5rem;
-}
+    color: var(--white1) !important;
+} */
 body > div{
     flex: 1;
     display: flex;
@@ -37,18 +33,34 @@ body > div{
     margin: 10px;
     background-color: var(--black2);
     border-radius: 8px;
+    position: relative;
 }
+/* #upload-csv, #manual-entry{
+    transition: background-color 0.5s ease-in-out;
+} */
 #input-type > span{
     height: 30px;
     width: 45%;
     display: grid;
     place-items: center;
     font-size: 0.8rem;
-    padding: 5px;
+    padding: 5px 0 5px 0;
     border-radius: 8px;
+    background-color: transparent;
+    z-index: 1;
+    cursor: default;
 }
-#input-type > span.selected{
+#input-type > span#background-blob{
+    position: absolute;
+    width: 45%;
     background-color: var(--black3);
+    transition: transform 0.5s ease-in-out;
+}
+#background-blob.left{
+    transform: translateX(-54%);
+}
+#background-blob.right{
+    transform: translateX(54%);
 }
 #participant-form{
     height: fit-content;
@@ -63,9 +75,9 @@ body > div{
     background-color: var(--black2);
     border-radius: 10px;
 }
-#csv-input{
-    width: 80%;
-    height: 70px;
+#csv-input-div{
+    width: max(80%,300px);
+    height: fit-content;
     padding: 20px;
     box-sizing: border-box;
     background-color: var(--black3);
@@ -76,26 +88,41 @@ body > div{
     display: grid;
     place-items: center;
 }
-#csv-input input::file-selector-button{
+#csv-input-div code{
+    display: grid;
+    place-items: center;
+}
+#csv-input-div label{
+    width: max(200px, 70%);
+    padding: 10px 0 10px 0;
+    border: solid var(--white3) 1px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+#csv-input-div input::file-selector-button{
     border: none;
     height: 25px;
     width: 100px;
     border-radius: 8px;
     background-color: var(--white3);
 }
-#manual-input{
+#manual-input-div{
     width: 80%;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 20px;
 }
-#manual-input > label{
+#manual-input-div > label{
     width: 100%;
     display: flex;
     justify-content: flex-start;
 }
-#manual-input > label div{
+#manual-input-div > label div{
     aspect-ratio: 1/1;
     height: 50px;
     background-color: var(--black1);
@@ -103,18 +130,21 @@ body > div{
     place-items: center;
     border-radius: 8px 0 0 8px;
 }
-#manual-input > label svg{
+#manual-input-div > label svg{
     fill: var(--black5);
 }
-#manual-input input{
+#manual-input-div input{
     flex: 1;
     min-width: 0;
     border: solid transparent 4px;
+    background-color: var(--black3);
+    color: var(--white3);
     border-radius: 0 8px 8px 0;
     padding-left: 15px;
     font-family: inherit;
+    font-size: 0.9rem;
 }
-#manual-input input:focus{
+#manual-input-div input:focus{
     border: solid var(--black1) 4px;
     outline: none;
 }
@@ -129,11 +159,19 @@ input[type=number]::-webkit-outer-spin-button {
     border: none;
     border-radius: 8px;
     font-family: inherit;
-    background-color: var(--accent);
+    background-color: var(--white3);
     transition: background-color 0.3s ease-in-out,
                 transform 0.3s ease-in-out;
 }
 #participant-form-submit-btn:hover{
-    background-color: rgba(var(--accentno),0.8);
+    background-color: var(--white5);
     transform: scaleY(1.1);
+}
+@media(max-width: 700px){
+    #csv-input-div{
+        font-size: 0.9rem;
+    }
+    #csv-input-div input{
+        width: 100px;
+    }
 }

@@ -10,7 +10,7 @@ body{
     display: flex;
     flex-direction: column;
 }
-nav{
+/* nav{
     width: 100%;
     min-height: 100px;
     display: flex;
@@ -18,7 +18,8 @@ nav{
     align-items: center;
     font-size: 2rem;
     box-shadow: 0 1px 15px var(--white3);
-}
+    color: var(--white1) !important;
+} */
 #events{
     flex: 1;
     display: flex;

@@ -25,6 +25,19 @@ body{
     color: var(--white1);
     position: relative;
 }
+nav{
+  width: 100%;
+  min-height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  box-shadow: 0 1px 15px var(--white3);
+}
+nav a{
+  text-decoration: none;
+  color: var(--white1);
+}
 .hide{
     display: none !important;
 }

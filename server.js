@@ -22,7 +22,7 @@ app.get('/',(req,res)=>{
 app.get('/add-participants/:id',verifyAuth,(req,res)=>{
     res.render('manage');
 });
-app.get('/attendance/:id',(req,res)=>{
+app.get('/attendance/:id',verifyAuth,(req,res)=>{
     res.render('attendance');
 });
 
@@ -163,7 +163,26 @@ app.post('/verify-auth',(req,res)=>{
         res.json({ isAuth:false, isAdmin:false, message:"Auth Verification Failed" });
     }
 })
+app.post('/add-participants',verifyAuth,async (req,res)=>{
+    const { participantArray } = req.body;
+    const token = req.cookies.authCookie;
 
+    try{
+        const payload = jwt.verify(token,process.env.JWT_SECRET);
+        const event = await Event.findOne({ id: payload.eventId });
+        const newParticipants = participantArray.filter(p => !event.participants.includes(p));
+        event.participants = event.participants.concat(newParticipants);
+        await event.save();
+
+        const newEntries = newParticipants.length;
+        const duplicateEntries = participantArray.length - newEntries;
+
+        const message = (duplicateEntries)?`${newEntries} new entries added.(${duplicateEntries} duplicate entries.)`:`${newEntries} new entries added`;
+        res.json({ success:true,message })
+    }catch(err){
+        res.json({ success:false,message:"SERVER ERROR: New entries not saved to DB"});
+    }
+})
 
 
 const port = 3000
