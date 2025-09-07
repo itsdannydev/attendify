@@ -1,4 +1,6 @@
-import { notify } from '../global.js'
+import { notify } from '../global.js';
+import { getEvents } from '../index.js';
+import { closePopup } from './popup.js';
 
 export async function handleCreate(eventTitle, adminPass, ocPass, contact){
     try{
@@ -19,7 +21,8 @@ export async function handleCreate(eventTitle, adminPass, ocPass, contact){
             closePopup();
             getEvents();
         } else {
-            notify(`Event Creation Failed: ${data.message} (Server)`);
+            notify("ERROR CREATING EVENT")
+            console.log(data.message);
         }
     }catch(err){
         console.log("Error creating the event",err);
@@ -45,11 +48,13 @@ export async function handleEdit(eventTitle, adminPass, ocPass, event){
             closePopup();
             getEvents();
         } else {
-            notify(data.message);
+            //configuire notify and console.log along with route setup
+            notify("ERROR EDITING EVENT");
+            console.log(data.message);
         }
     }catch(err){
         console.log("Error creating the event",err);
-        notify("ERROR CREATING EVENT");
+        notify("ERROR EDITING EVENT");
     }
 }
 
@@ -77,7 +82,7 @@ export async function handleAdminAuth(adminPass, event){
         }
     }catch(err){
         console.log('Error verifying admin authentication: ',err.message);
-        notify(`Error verifying admin authentication: ${err.message}`);
+        notify(`Error verifying admin authentication`);
     }
 }
 
@@ -105,6 +110,6 @@ export async function handleAuth(password, event){
         }
     }catch(err){
         console.log('Error verifying authentication: ',err.message);
-        notify(`Error verifying authentication: ${err.message}`);
+        notify(`Error verifying authentication`);
     }
 }

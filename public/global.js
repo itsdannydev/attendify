@@ -1,4 +1,41 @@
-// --------------NOTIFICATIONS--------------
+//-----------------------------CHECKING AUTH-----------------------------
+export async function isAuth(eventId){
+    try{
+        const res = await fetch('/verify-auth',{
+            method:"POST",
+            headers: { 'Content-Type':"application/json" },
+            body: JSON.stringify({ eventId })
+        });
+
+        const data = await res.json();
+        if(data.message){
+            notify(data.message);
+        }
+        return data.isAuth;
+    }catch(err){
+        console.log('Error running isAuth()');
+        return false;
+    }
+}
+export async function isAdmin(eventId){
+    try{
+        const res = await fetch('/verify-auth',{
+            method:"POST",
+            headers: { 'Content-Type':"application/json" },
+            body: JSON.stringify({ eventId })
+        });
+
+        const data = await res.json();
+        if(data.message){
+            notify(data.message);
+        }
+        return data.isAdmin;
+    }catch(err){
+        console.log('Error running isAuth()');
+        return false;
+    }
+}
+// ----------------------------NOTIFICATIONS----------------------------
 // Notification container
 const notficationContainer = document.createElement('div');
 notficationContainer.id = "notification-container";

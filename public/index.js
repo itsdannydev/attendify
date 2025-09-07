@@ -1,8 +1,8 @@
-import { notify } from "./global.js";
+import { notify, isAdmin, isAuth } from "./global.js";
 import { showPopup } from './popup/popup.js'
 
 //fetching and adding events data
-async function getEvents(){
+export async function getEvents(){
     try{
         const res = await fetch('/events-data');
         const data = await res.json();
@@ -82,14 +82,26 @@ function showEvents(events){
             //button container
             const btnContainer = document.createElement('div');
             btnContainer.classList.add('btn-container');
-            btnContainer.appendChild(createButton('manage','Manage',()=>{
-                window.location.href = `/add-participants/${event.id}`;
+            btnContainer.appendChild(createButton('manage','Manage',async ()=>{
+                if(await isAuth(event.id)){
+                    window.location.href = `/add-participants/${event.id}`;
+                }else{
+                    showPopup('auth',event);
+                }
             }))
-            btnContainer.appendChild(createButton('edit','Edit',()=>{
-                showPopup("edit",event);
+            btnContainer.appendChild(createButton('edit','Edit',async ()=>{
+                if(await isAdmin(event.id)){
+                    showPopup("edit",event);
+                }else{
+                    showPopup('adminAuth',event);
+                }
             }))
-            btnContainer.appendChild(createButton('attendance','Attendance',()=>{
-                window.location.href = `/attendance/${event.id}`;
+            btnContainer.appendChild(createButton('attendance','Attendance',async ()=>{
+                if(await isAuth(event.id)){
+                    window.location.href = `/attendance/${event.id}`;
+                }else{
+                    showPopup('auth',event);
+                }
             }))
 
             //final appending

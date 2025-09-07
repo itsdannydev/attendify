@@ -11,7 +11,7 @@ const popupForm = document.getElementById('popup-form');
 function openPopup(){
     popupBg.classList.remove('hide');
 }
-function closePopup(){
+export function closePopup(){
     popupBg.classList.add('hide');
     popupForm.innerHTML='';
 }
@@ -51,28 +51,30 @@ export function showPopup(type,event){
         isSubmitting = true;
 
         try{
-            //inputs
-            const eventTitle = document.getElementById('event-title');
-            const adminPass = document.getElementById('admin-pass');
-            const ocPass = document.getElementById('oc-pass');
-            const contact = document.getElementById('contact');
-            const password = document.getElementById('password')
-
             switch(type){
                 case "create": {
+                    const eventTitle = document.getElementById('event-title');
+                    const adminPass = document.getElementById('admin-pass');
+                    const ocPass = document.getElementById('oc-pass');
+                    const contact = document.getElementById('contact');
                     await handleCreate(eventTitle, adminPass, ocPass,contact);
                     break;
                 }
                 case 'edit':{
+                    const eventTitle = document.getElementById('event-title');
+                    const adminPass = document.getElementById('admin-pass');
+                    const ocPass = document.getElementById('oc-pass');
                     await handleEdit(eventTitle, adminPass, ocPass, event);
                     break;
                 }
                 case 'adminAuth':{
-                    await handleAdminAuth(adminPass.value, event);
+                    const adminPass = document.getElementById('admin-pass');
+                    await handleAdminAuth(adminPass, event);
                     break;
                 }
                 case 'auth':{
-                    await handleAuth(password.value, event);
+                    const password = document.getElementById('password')
+                    await handleAuth(password, event);
                     break;
                 }
             }

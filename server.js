@@ -13,17 +13,21 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.set('view engine','ejs');
-
-//routes
+//-------------------------------MY MIDDLEWARES-------------------------------
+const verifyAuth = require('./middlewares/verifyAuth');
+//-----------------------------------ROUTES-----------------------------------
 app.get('/',(req,res)=>{
     res.render('index');
 });
-app.get('/add-participants',(req,res)=>{
+app.get('/add-participants/:id',verifyAuth,(req,res)=>{
     res.render('manage');
 });
-app.get('/attendance',(req,res)=>{
+app.get('/attendance/:id',(req,res)=>{
     res.render('attendance');
 });
+
+
+
 //--------------------------------API ENDPOINTS--------------------------------
 const Event = require('./models/Event');
 //GET Requests
@@ -84,6 +88,7 @@ app.post('/adminAuth', async (req,res) =>{
             };
             const token = jwt.sign(payload, process.env.JWT_SECRET,{ expiresIn:"2h" });
 
+            res.clearCookie('authCookie');//if login into a new event, log out of prev event
             res.cookie('authCookie', token,{
                 httpOnly: true,
                 secure: false, //change to true on production
@@ -118,6 +123,7 @@ app.post('/auth', async (req,res) =>{
             };
             const token = jwt.sign(payload, process.env.JWT_SECRET,{ expiresIn:"2h" });
 
+            res.clearCookie('authCookie');//if login into a new event, log out of prev event
             res.cookie('authCookie', token,{
                 httpOnly: true,
                 secure: false, //change to true on production
@@ -138,6 +144,24 @@ app.post('/auth', async (req,res) =>{
         res.json({ success:false, message: `SERVER ERROR: Authenticating user -> ${err.message }`})
     }
 
+})
+app.post('/verify-auth',(req,res)=>{
+    const { eventId } = req.body;
+    const token = req.cookies.authCookie;
+
+    if(!token){
+        return res.json({ isAdmin:false, isAuth:false });
+    }
+
+    try{
+        const payload = jwt.verify(token, process.env.JWT_SECRET);
+        const isAuth = payload.eventId === eventId;
+        const isAdmin = isAuth && payload.role === "admin";
+
+        res.json({ isAuth, isAdmin })
+    }catch(err){
+        res.json({ isAuth:false, isAdmin:false, message:"Auth Verification Failed" });
+    }
 })
 
 
