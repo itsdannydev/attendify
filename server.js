@@ -163,6 +163,35 @@ app.post('/verify-auth',(req,res)=>{
         res.json({ isAuth:false, isAdmin:false, message:"Auth Verification Failed" });
     }
 })
+app.post('/edit-event/:id', verifyAuth, async (req, res)=>{
+    const { eventTitle, adminPass, ocPass } = req.body;
+    const token = req.cookies.authCookie;
+
+    try{
+        const payload = jwt.verify(token,process.env.JWT_SECRET);
+        const event = await Event.findOne({ id:payload.eventId });
+
+        let messages = [];
+        if(eventTitle){
+            messages.push(`Event "${event.title}" is now renamed as "${eventTitle}"`);
+            event.title = eventTitle;
+        }
+        if(adminPass){
+            event.users.adminPass = adminPass;
+            messages.push('Admin Password Updated');
+        }
+        if(ocPass){
+            event.users.ocPass = ocPass;
+            messages.push('OC Password Updated');
+        }
+
+        await event.save();
+
+        res.json({ success:true,messages })
+    }catch(err){
+        res.json({ success:false,message:"SERVER ERROR: Error updating DB"});
+    }
+})
 app.post('/add-participants',verifyAuth,async (req,res)=>{
     const { participantArray } = req.body;
     const token = req.cookies.authCookie;

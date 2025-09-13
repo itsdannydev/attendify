@@ -44,13 +44,15 @@ export async function handleEdit(eventTitle, adminPass, ocPass, event){
     
         const data = await res.json();
         if(data.success){
-            notify(`New event "${eventTitle.value}" successfully created!`);
+            data.messages.forEach(async message => {
+                setTimeout(()=>{
+                    notify(message);
+                },1000)
+            });
             closePopup();
             getEvents();
         } else {
-            //configuire notify and console.log along with route setup
-            notify("ERROR EDITING EVENT");
-            console.log(data.message);
+            notify(data.message);
         }
     }catch(err){
         console.log("Error creating the event",err);

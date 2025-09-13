@@ -71,13 +71,21 @@ function showEvents(events){
             infoContainer.classList.add('info-container');
             const h4 = document.createElement('h4');
             h4.textContent=event.title;
+            const idSpan = document.createElement('span');
+            idSpan.id = 'id-span';
+            idSpan.textContent = `Event ID: `;
+            const code = document.createElement('span');
+            code.textContent = event.id;
+            idSpan.appendChild(code);
             const p = document.createElement('p');
             p.textContent = `Created At: ${event.createdAt}`;
-            const span = document.createElement('span');
-            span.textContent=`Participants: ${event.participants}`
+            const participantSpan = document.createElement('span');
+            participantSpan.id = 'participant-span';
+            participantSpan.textContent=`Participants: ${event.participants}`
             infoContainer.appendChild(h4);
+            infoContainer.appendChild(idSpan);
             infoContainer.appendChild(p);
-            infoContainer.appendChild(span);
+            infoContainer.appendChild(participantSpan);
 
             //button container
             const btnContainer = document.createElement('div');

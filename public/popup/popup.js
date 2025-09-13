@@ -44,7 +44,7 @@ export function showPopup(type,event){
     })
     //--------------------FORM SUBMITION--------------------
     let isSubmitting = false;
-    popupForm.addEventListener('submit',async (e)=>{
+    popupForm.onsubmit = async (e)=>{
         e.preventDefault();
         
         if(isSubmitting)return;
@@ -84,5 +84,5 @@ export function showPopup(type,event){
             isSubmitting = false;
         }
 
-    })
+    }
 }

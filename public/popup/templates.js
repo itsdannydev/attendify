@@ -36,16 +36,16 @@ export function createEventTemplate(type,event){
                 <hr>
                 <div>
                     <label>
-                        <span>${event.title}</span>
-                        <input id="event-title" class="popup-inputs" type="text" required>
+                        <span>${event.title}(Optional)</span>
+                        <input id="event-title" class="popup-inputs" type="text">
                     </label>
                     <label>
-                        <span>New Admin Password</span>
-                        <input id="admin-pass" class="popup-inputs" type="text" required>
+                        <span>New Admin Password(Optional)</span>
+                        <input id="admin-pass" class="popup-inputs" type="text">
                     </label>
                     <label>
-                        <span>New OC Password</span>
-                        <input id="oc-pass" class="popup-inputs" type="text" required>
+                        <span>New OC Password(Optional)</span>
+                        <input id="oc-pass" class="popup-inputs" type="text">
                     </label>
                     <label>
                         <input disabled class="popup-inputs" type="text" value="*Contact of an event can't be edited">
