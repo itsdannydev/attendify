@@ -18,6 +18,8 @@ app.set('view engine','ejs');
 const verifyAuth = require('./middlewares/verifyAuth');
 const verifyAdminAuth = require('./middlewares/verifyAdminAuth');
 const isAttendanceLocked = require('./middlewares/isAttendanceLocked');
+//-----------------------------------UTILITY-----------------------------------
+const { hashPassword, verifyPassword } = require('./utility/hashUtil');
 //-----------------------------------ROUTES-----------------------------------
 app.get('/',(req,res)=>{
     res.render('index');
@@ -111,6 +113,9 @@ app.get('/export-csv',verifyAdminAuth, async (req,res)=>{
 app.post('/new-event', async (req,res)=>{
     const { eventTitle, adminPass, ocPass, contact } = req.body;
     try{
+        //hashing passwords
+        const hashedAdminPass = await hashPassword(adminPass);
+        const hashedOcPass = await hashPassword(ocPass);
         //unique id generator
         let id, exists;
         do{
@@ -125,7 +130,7 @@ app.post('/new-event', async (req,res)=>{
         const newEvent = new Event({
             id,
             title: eventTitle,
-            users:{ adminPass,ocPass },
+            users:{ adminPass:hashedAdminPass,ocPass:hashedOcPass },
             contact
         });
         await newEvent.save();
@@ -141,7 +146,8 @@ app.post('/adminAuth', async (req,res) =>{
     const { adminPass,eventId } = req.body;
     try{
         const event = await Event.findOne({ id:eventId });
-        if(event.users.adminPass == adminPass){
+        if( await verifyPassword(adminPass,event.users.adminPass)){
+        // if(event.users.adminPass == adminPass){
             const payload = {
                 role: "admin",
                 eventId: event.id
@@ -174,8 +180,8 @@ app.post('/auth', async (req,res) =>{
     const { password,eventId } = req.body;
     try{
         const event = await Event.findOne({ id:eventId });
-        const isAdmin = (event.users.adminPass == password);
-        const isOc = (event.users.ocPass == password);
+        const isAdmin = await verifyPassword(password,event.users.adminPass);
+        const isOc = await verifyPassword(password,event.users.ocPass);
         if(isAdmin || isOc){
             const payload = {
                 role: (isAdmin)?"admin":"oc",
@@ -236,11 +242,11 @@ app.post('/edit-event/:id', verifyAdminAuth, async (req, res)=>{
             event.title = eventTitle;
         }
         if(adminPass){
-            event.users.adminPass = adminPass;
+            event.users.adminPass = await hashPassword(adminPass);
             messages.push('Admin Password Updated');
         }
         if(ocPass){
-            event.users.ocPass = ocPass;
+            event.users.ocPass = await hashPassword(ocPass);
             messages.push('OC Password Updated');
         }
 
