@@ -92,11 +92,11 @@ app.get('/export-csv',verifyAdminAuth, async (req,res)=>{
             name: p.name,
             regno: p.regno,
             phno: p.phno,
-            attendanceStatus: p.present?"Present":"Absent"
+            attendance: p.present?"Present":"Absent"
         }));
 
         const csv = Papa.unparse(csvData,{
-            columns: ['sno','name','regno','phno','attendanceStatus']
+            columns: ['sno','name','regno','phno','attendance']
         });
 
         res.json({
