@@ -15,11 +15,13 @@ app.use(cookieParser());
 app.set('view engine','ejs');
 //-------------------------------MY MIDDLEWARES-------------------------------
 const verifyAuth = require('./middlewares/verifyAuth');
+const verifyAdminAuth = require('./middlewares/verifyAdminAuth');
+const isAttendanceLocked = require('./middlewares/isAttendanceLocked');
 //-----------------------------------ROUTES-----------------------------------
 app.get('/',(req,res)=>{
     res.render('index');
 });
-app.get('/add-participants/:id',verifyAuth,(req,res)=>{
+app.get('/add-participants/:id',verifyAuth, isAttendanceLocked,(req,res)=>{
     res.render('manage');
 });
 app.get('/attendance/:id',verifyAuth,(req,res)=>{
@@ -55,7 +57,8 @@ app.get('/events-data',async (req,res)=>{
             id: event.id,
             title: event.title,
             createdAt: event.createdAt.toLocaleDateString('en-GB'),
-            participants: event.participants.length
+            participants: event.participants.length,
+            attendanceLocked: event.attendanceLocked
         }));
 
         res.json({ events: formattedEvents });
@@ -64,7 +67,7 @@ app.get('/events-data',async (req,res)=>{
         res.json({ message: `SERVER ERROR: Fetching events -> ${err.message}`});
     }
 })
-app.get('/participants-data',async (req,res)=>{
+app.get('/participants-data',verifyAuth,async (req,res)=>{
     const token = req.cookies.authCookie;
     const payload = jwt.verify(token, process.env.JWT_SECRET);
     const id = payload.eventId;
@@ -192,10 +195,9 @@ app.post('/verify-auth',(req,res)=>{
         res.json({ isAuth:false, isAdmin:false, message:"Auth Verification Failed" });
     }
 })
-app.post('/edit-event/:id', verifyAuth, async (req, res)=>{
+app.post('/edit-event/:id', verifyAdminAuth, async (req, res)=>{
     const { eventTitle, adminPass, ocPass } = req.body;
     const token = req.cookies.authCookie;
-
     try{
         const payload = jwt.verify(token,process.env.JWT_SECRET);
         const event = await Event.findOne({ id:payload.eventId });
@@ -221,7 +223,7 @@ app.post('/edit-event/:id', verifyAuth, async (req, res)=>{
         res.json({ success:false,message:"SERVER ERROR: Error updating DB"});
     }
 })
-app.post('/add-participants',verifyAuth,async (req,res)=>{
+app.post('/add-participants',verifyAuth, isAttendanceLocked,async (req,res)=>{
     const { participantArray } = req.body;
     const token = req.cookies.authCookie;
 
@@ -245,7 +247,7 @@ app.post('/add-participants',verifyAuth,async (req,res)=>{
         res.json({ success:false,message:"SERVER ERROR: New entries not saved to DB"});
     }
 })
-app.post('/attendance-trigger',verifyAuth,async (req,res)=>{
+app.post('/attendance-trigger',verifyAuth, isAttendanceLocked,async (req,res)=>{
     const token = req.cookies.authCookie;
     try{
         const payload = jwt.verify(token, process.env.JWT_SECRET);
@@ -267,6 +269,32 @@ app.post('/attendance-trigger',verifyAuth,async (req,res)=>{
     }catch(err){
         res.json({ success:false,message:"Error updating attendance" })
     }
+});
+app.post('/attendance-lock-toggle',verifyAdminAuth, async (req,res)=>{
+    const user = req.user;
+    try{
+        const event = await Event.findOne({ id:user.eventId });
+        const currLocked = !event.attendanceLocked;
+        const currStatus = (currLocked)?"locked":"unlocked";
+        event.attendanceLocked = currLocked;
+        await event.save();
+
+        res.json({ success:true,message:`Attendance ${currStatus} for event "${event.title}"`} );
+    }catch(err){
+        console.log("Error, attendance not locked/unlocked: ",err.message);
+        res.json({ success:false,message:"Error: Attendance status not changesd" });
+    }
+});
+
+app.post('/isAttendanceLocked',async (req,res)=>{
+    const { eventId } = req.body;
+    try{
+        const event = await Event.findOne({ id:eventId });
+        res.json({ success:true,isLocked:event.attendanceLocked })
+    }catch(err){
+        console.log('Error checking attendance status',err.message);
+        res.json({ success:false,message:'Error checking attendance status'})
+    } 
 })
 
 

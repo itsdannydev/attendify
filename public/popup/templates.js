@@ -52,7 +52,10 @@ export function createEventTemplate(type,event){
                     </label>
                 </div>
                 <button type="submit">SAVE CHANGES</button>
-                <button type="button" id="delete-event">DELETE EVENT</button>
+                <div id="btn-container">
+                    <button type="button" id="lock-attendance">${(event.attendanceLocked)?"UNLOCK":"LOCK"} ATTENDANCE</button>
+                    <button type="button" id="delete-event">DELETE EVENT</button>
+                </div>
             `
             
             break;

@@ -92,7 +92,7 @@ export function showPopup(type,event){
     const deleteEvent = document.getElementById('delete-event');
     if(deleteEvent){
         deleteEvent.addEventListener('click',async ()=>{
-            const confirmed = confirm("Are you sure you want to delete this event?\nThis action cannot be reversed");
+            const confirmed = confirm(`Are you sure you want to delete the event "${event.title}"?\nThis action cannot be reversed`);
             if (!confirmed) return;
             try{
                 const res = await fetch('/delete-event',{
@@ -109,5 +109,29 @@ export function showPopup(type,event){
                 notify("Error Deleting Event");
             }
         })
+    }
+    //-----------------------LOCK ATTENDANCE-----------------------
+    const lockAttendance = document.getElementById('lock-attendance');
+    if(lockAttendance){
+        lockAttendance.addEventListener('click',async ()=>{
+            const confirmed = confirm(`Do you want to ${ (event.attendanceLocked)?"unlock":"lock" } the attendance for the event "${event.title}"?`);
+            if(!confirmed) return;
+            try{
+                const res = await fetch('/attendance-lock-toggle',{
+                    method: 'POST',
+                    headers: { 'Content-Type':'application/json' }
+                });
+
+                const data = await res.json();
+                notify(data.message);
+                if(data.success){
+                    closePopup();
+                    getEvents();
+                }
+            }catch(err){
+                console.log("Error locking attendance: ",err.message);
+                notify("Error Locking Attendance");
+            }
+        });
     }
 }

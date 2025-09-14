@@ -3,8 +3,10 @@ const jwt = require('jsonwebtoken');
 function verifyAuth(req,res,next){
     const token = req.cookies.authCookie;
     if(!token){
-        return res.redirect('/');
-        // return res.json({ success: false, message: "No authentication token provided" })
+        if(req.body == undefined){
+            return res.redirect(`/?message=${encodeURIComponent("Authentication Token Not Found")}`);
+        }
+        return res.json({ success:false, message: "Authentication Token Not Found" });
     }
 
     try{
@@ -13,8 +15,10 @@ function verifyAuth(req,res,next){
         next();
     }catch(err){
         console.log("JWT verification error: ",err.message);
-        return res.redirect('/');
-        // return res.json({ success:false, message:"Invalid or Expired Token" })
+        if(req.body == undefined){
+            return res.redirect(`/?message=${encodeURIComponent("Auth Verification Failed")}`);
+        }
+        return res.json({ success:false, message: "Auth Verification Failed" });
     }
 }
 

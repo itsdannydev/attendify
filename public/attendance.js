@@ -31,7 +31,6 @@ function showAttendanceTable(participantArray){
     tableBody.innerHTML = '';
     let sno = 0
 
-    // currParticipants = participantArray;
     participantArray.forEach(participant => {
         const tableRow = document.createElement('tr');
         tableRow.classList.add((sno%2==0)?"even":"odd");
@@ -72,6 +71,11 @@ function showAttendanceTable(participantArray){
 
                 const data = await res.json();
                 notify(data.message);
+                if(!data.success){
+                    setTimeout(()=>{
+                        checkbox.checked = !checkbox.checked;
+                    },100);
+                }
             }catch(err){
                 console.log("Error updating attendance",err.message);
                 notify(`Error updating attendance for ${participant.name}(${participant.regno}): ${err.message}`);
@@ -88,13 +92,13 @@ const searchParticipantsInput = document.getElementById('search-participants-inp
 searchParticipantsInput.addEventListener('input',async ()=>{
     const val = searchParticipantsInput.value.toLowerCase().trim();
 
-    const filteredArray = fullParticipants.filter(p => 
+    const searchedArray = fullParticipants.filter(p => 
         p.name.toLowerCase().includes(val) ||
         p.regno.toLowerCase().includes(val) ||
         p.phno.toLowerCase().includes(val)
     );
 
-    currParticipants = filteredArray;
+    currParticipants = searchedArray;
     applyFilter(currFilter);
 })
 
@@ -109,12 +113,12 @@ filterIcon.addEventListener('click',()=>{
 function applyFilter(filter){
     currFilter = filter;
     
-    let filteredArray = [];
+    let filteredArray = currParticipants;
+
     if(currFilter == 'nofilter'){
         filterIcon.classList.remove('present');
         filterIcon.classList.remove('absent');
         filterIcon.innerHTML = '<path d="m592-481-57-57 143-182H353l-80-80h487q25 0 36 22t-4 42L592-481ZM791-56 560-287v87q0 17-11.5 28.5T520-160h-80q-17 0-28.5-11.5T400-200v-247L56-791l56-57 736 736-57 56ZM535-538Z"/>';
-        filteredArray = currParticipants;
     }else{
         filterIcon.innerHTML = '<path d="M440-160q-17 0-28.5-11.5T400-200v-240L168-736q-15-20-4.5-42t36.5-22h560q26 0 36.5 22t-4.5 42L560-440v240q0 17-11.5 28.5T520-160h-80Zm40-308 198-252H282l198 252Zm0 0Z"/>';
         if(currFilter == 'present'){

@@ -1,6 +1,13 @@
 import { notify, isAdmin, isAuth } from "./global.js";
 import { showPopup } from './popup/popup.js'
 
+const params = new URLSearchParams(window.location.search);
+const msg = params.get("message");
+if(msg){
+    notify(msg);
+}
+window.history.replaceState({},document.title,window.location.pathname);
+
 const createEvent = document.getElementById('create-event');
 const createEventCard = document.getElementById('create-event-card');
 
