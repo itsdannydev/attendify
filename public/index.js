@@ -4,19 +4,24 @@ import { showPopup } from './popup/popup.js'
 const createEvent = document.getElementById('create-event');
 const createEventCard = document.getElementById('create-event-card');
 
+let fullEvents = [];
+
 //fetching and adding events data
 export async function getEvents(){
     try{
         const res = await fetch('/events-data');
         const data = await res.json();
+
+        fullEvents = data.events;
+        
         console.log('Event details fetched');
         notify('Events Loaded');
         
-        if(data.events.length == 0){
+        if(fullEvents.length == 0){
             createEventCard.classList.remove('hide');
         } else {
             createEventCard.classList.add('hide');
-            showEvents(data.events);
+            showEvents(fullEvents);
         }
     }catch(err){
         console.log('Error fetching data from server: ',err);
@@ -129,3 +134,16 @@ function createButton(className, text, onClick) {
     btn.addEventListener('click', onClick);
     return btn;
 }
+
+//searching events functionality
+const searchEventsInput = document.getElementById('search-events-input');
+searchEventsInput.addEventListener('input',()=>{
+    const val = searchEventsInput.value.toLowerCase().trim();
+
+    const filteredEventsArray = fullEvents.filter(event => 
+        event.title.toLowerCase().includes(val) ||
+        event.id.toLowerCase().includes(val)
+    );
+
+    showEvents(filteredEventsArray);
+})

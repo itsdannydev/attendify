@@ -31,6 +31,8 @@ body > #container{
     font-size: 1rem;
     padding-left: 30px;
     box-sizing: border-box;
+    background-color: var(--black3);
+    color: var(--white3);
 }
 #search-participants input:focus{
     outline: none;
@@ -39,6 +41,7 @@ body > #container{
     position: absolute;
     right: 15px;
     top: 10px;
+    fill: var(--white3);
 }
 #attendance-container {
     height: fit-content;

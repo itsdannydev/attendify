@@ -21,9 +21,37 @@ body{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 20px min(150px,15%) 0 min(150px,15%);
+    margin: 50px min(150px,15%) 0 min(150px,15%);
     font-size: 2rem;
     font-weight: 800;
+}
+#search-events{
+    height: 40px;
+    flex: 1;
+    max-width: 700px;
+    margin: 0 20px;
+    position: relative;
+}
+#search-events-input{
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    padding-left: 20px;
+    border-radius: 10px;
+    border: none;
+    font-family: inherit;
+    font-size: 1rem;
+    background-color: var(--black3);
+    color: var(--white3);
+}
+#search-events-input:focus{
+    outline: none;
+}
+#search-events svg{
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    fill: var(--white3);
 }
 #create-event{
     height: 35px;
