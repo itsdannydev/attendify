@@ -13,6 +13,9 @@
 
     --blackno: 13, 13, 13;
     --whiteno: 242, 242, 242;
+
+    --true: rgb(76, 175, 80);
+    --false: rgb(175, 76, 80);
 }
 *{
     margin: 0;

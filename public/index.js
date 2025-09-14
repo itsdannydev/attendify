@@ -1,6 +1,9 @@
 import { notify, isAdmin, isAuth } from "./global.js";
 import { showPopup } from './popup/popup.js'
 
+const createEvent = document.getElementById('create-event');
+const createEventCard = document.getElementById('create-event-card');
+
 //fetching and adding events data
 export async function getEvents(){
     try{
@@ -22,8 +25,6 @@ export async function getEvents(){
 getEvents();
 
 //popup toggle
-const createEvent = document.getElementById('create-event');
-const createEventCard = document.getElementById('create-event-card');
 createEvent.addEventListener('click',()=>{
     showPopup("create");
 });

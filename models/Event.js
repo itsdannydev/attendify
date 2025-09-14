@@ -35,7 +35,7 @@ const eventSchema = new mongoose.Schema({
                 type: String,
                 required: true
             },
-            phoneno:String,
+            phno:String,
             present:{
                 type: Boolean,
                 required: true,

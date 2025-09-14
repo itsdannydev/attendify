@@ -34,7 +34,7 @@ export async function handleCSV(csvInput) {
             header:true,
             skipEmptyLines:true,
             transformHeader: header =>{
-                const lower = header.toLowerCase();
+                const lower = header.toLowerCase().trim();
                 for(const key in aliasMap){
                     if(aliasMap[key].some(alias => alias.toLowerCase() === lower)){
                         return key;
@@ -44,7 +44,17 @@ export async function handleCSV(csvInput) {
             }
         })
 
-        return { success:true, participants:result.data, message:"Data extracted from CSV" }
+        const participants = result.data.map(row => {
+            const filteredRow = {};
+            for(const key in row){
+                if(key !== "null"){
+                    filteredRow[key] = row[key];
+                }
+            }
+            return filteredRow;
+        })
+
+        return { success:true, participants, message:"Data extracted from CSV" }
     }catch(err){
         console.log("Error processing CSV: ", err.message);
         return { success:false, message:"Error Adding Participants" };

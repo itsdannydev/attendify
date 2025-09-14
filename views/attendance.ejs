@@ -7,6 +7,8 @@
 
     <link rel="stylesheet" href="/global.css">
     <link rel="stylesheet" href="/attendance.css">
+    
+    <script type="module" src="/attendance.js"></script>
 </head>
 <body>
     <nav>
@@ -14,7 +16,13 @@
             <a href="/">ATTENDIFY</a>
         </h1>
     </nav>
-    <div>
+    <div id="container">
+        <label id="search-participants">
+            <input id="search-participants-input" type="text" placeholder="Search (Name, RegNo, PhoneNo)">
+            <svg xmlns="http://www.w3.org/2000/svg" height="30px" width="30px" viewBox="0 0 640 640">
+                <path d="M480 272C480 317.9 465.1 360.3 440 394.7L566.6 521.4C579.1 533.9 579.1 554.2 566.6 566.7C554.1 579.2 533.8 579.2 521.3 566.7L394.7 440C360.3 465.1 317.9 480 272 480C157.1 480 64 386.9 64 272C64 157.1 157.1 64 272 64C386.9 64 480 157.1 480 272zM272 416C351.5 416 416 351.5 416 272C416 192.5 351.5 128 272 128C192.5 128 128 192.5 128 272C128 351.5 192.5 416 272 416z"/>
+            </svg>
+        </label>
         <div id="attendance-container">
             <table id="attendance-table">
                 <thead>
@@ -23,47 +31,14 @@
                         <th>Name</th>
                         <th>Reg No</th>
                         <th>Phone No</th>
-                        <th>Attendance</th>
+                        <th id="input-header">
+                            <span>Attendance</span>
+                            <svg id="filter-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px">
+                                <path d="m592-481-57-57 143-182H353l-80-80h487q25 0 36 22t-4 42L592-481ZM791-56 560-287v87q0 17-11.5 28.5T520-160h-80q-17 0-28.5-11.5T400-200v-247L56-791l56-57 736 736-57 56ZM535-538Z"/>
+                            </svg>
+                        </th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr class="even">
-                        <td>1</td>
-                        <td>Danny</td>
-                        <td>24BCE5223</td>
-                        <td>7736172706</td>
-                        <td><input type="checkbox" class="attendance-toggle" /></td>
-                    </tr>
-                    <tr class="odd">
-                        <td>1</td>
-                        <td>Danny</td>
-                        <td>24BCE5223</td>
-                        <td>7736172706</td>
-                        <td><input type="checkbox" class="attendance-toggle" /></td>
-                    </tr>
-                    <tr class="even">
-                        <td>1</td>
-                        <td>Danny</td>
-                        <td>24BCE5223</td>
-                        <td>7736172706</td>
-                        <td><input type="checkbox" class="attendance-toggle" /></td>
-                    </tr>
-                    <tr class="odd">
-                        <td>1</td>
-                        <td>Danny</td>
-                        <td>24BCE5223</td>
-                        <td>7736172706</td>
-                        <td><input type="checkbox" class="attendance-toggle" /></td>
-                    </tr>
-                    <tr class="even">
-                        <td>1</td>
-                        <td>Danny</td>
-                        <td>24BCE5223</td>
-                        <td>7736172706</td>
-                        <td><input type="checkbox" class="attendance-toggle" /></td>
-                    </tr>
-                    
-                </tbody>
             </table>
         </div>
     </div>

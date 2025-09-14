@@ -47,6 +47,18 @@ app.get('/events-data',async (req,res)=>{
         res.json({ message: `SERVER ERROR: Fetching events -> ${err.message}`});
     }
 })
+app.get('/participants-data',async (req,res)=>{
+    const token = req.cookies.authCookie;
+    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    const id = payload.eventId;
+    try{
+        const event = await Event.findOne({ id });
+        const participantArray = event.participants;
+        res.json({ success:true,message:"Successfully fetched participants data",participantArray });
+    }catch(err){
+        res.json({ success:false,message:"Failed to fetch participants info" })
+    }
+})
 //POST Requests
 app.post('/new-event', async (req,res)=>{
     const { eventTitle, adminPass, ocPass, contact } = req.body;
@@ -199,8 +211,12 @@ app.post('/add-participants',verifyAuth,async (req,res)=>{
     try{
         const payload = jwt.verify(token,process.env.JWT_SECRET);
         const event = await Event.findOne({ id: payload.eventId });
-        const newParticipants = participantArray.filter(p => !event.participants.includes(p));
+
+        const existingRegnos = new Set(event.participants.map(p => p.regno));
+        const newParticipants = participantArray.filter(p => !existingRegnos.has(p.regno));
+
         event.participants = event.participants.concat(newParticipants);
+        console.log(event.participants);
         await event.save();
 
         const newEntries = newParticipants.length;
@@ -210,6 +226,29 @@ app.post('/add-participants',verifyAuth,async (req,res)=>{
         res.json({ success:true,message })
     }catch(err){
         res.json({ success:false,message:"SERVER ERROR: New entries not saved to DB"});
+    }
+})
+app.post('/attendance-trigger',verifyAuth,async (req,res)=>{
+    const token = req.cookies.authCookie;
+    try{
+        const payload = jwt.verify(token, process.env.JWT_SECRET);
+        const event = await Event.findOne({ id:payload.eventId });
+
+        const { regno,attendance } = req.body;
+        
+        const participant = event.participants.find(p => p.regno === regno);
+        if(!participant){
+            return res.json({ success:false,message:"Participant Not Found"});
+        }
+        participant.present = attendance;
+        await event.save();
+
+        res.json({ 
+            success:true,
+            message:`${participant.name}(${participant.regno}) marked as ${(attendance)?"present":"absent"}`
+        });
+    }catch(err){
+        res.json({ success:false,message:"Error updating attendance" })
     }
 })
 
