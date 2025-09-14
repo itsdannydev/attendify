@@ -71,7 +71,11 @@ function showAttendanceTable(participantArray){
 
                 const data = await res.json();
                 notify(data.message);
-                if(!data.success){
+                if(data.success){
+                    participant.present = checkbox.checked;
+                    const pIndex = fullParticipants.findIndex(p=>p.regno === participant.regno);
+                    if(pIndex !== -1)fullParticipants[pIndex].present = checkbox.checked;
+                }else{
                     setTimeout(()=>{
                         checkbox.checked = !checkbox.checked;
                     },100);
