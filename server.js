@@ -3,6 +3,7 @@ const app = express();
 const connectDB = require('./mongodb');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
+const Papa = require('papaparse');
 
 connectDB();
 
@@ -79,6 +80,33 @@ app.get('/participants-data',verifyAuth,async (req,res)=>{
         res.json({ success:false,message:"Failed to fetch participants info" })
     }
 })
+app.get('/export-csv',verifyAdminAuth, async (req,res)=>{
+    const { eventId } = req.user;
+    try{
+        const event = await Event.findOne({ id:eventId });
+
+        const csvData = event.participants.map( (p, index) => ({
+            sno: index+1,
+            name: p.name,
+            regno: p.regno,
+            phno: p.phno,
+            attendanceStatus: p.present?"Present":"Absent"
+        }));
+
+        const csv = Papa.unparse(csvData,{
+            columns: ['sno','name','regno','phno','attendanceStatus']
+        });
+
+        res.json({
+            success:true,
+            message:"CSV Generated Successfully",
+            file:csv
+        });
+    }catch(err){
+        console.log("Error generating CSV file: ",err.message);
+        res.json({ success:false,message:"Error Generating CSV file" });
+    }
+});
 //POST Requests
 app.post('/new-event', async (req,res)=>{
     const { eventTitle, adminPass, ocPass, contact } = req.body;

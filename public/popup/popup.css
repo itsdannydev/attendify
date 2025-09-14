@@ -70,19 +70,18 @@
     font-size: 0.7rem;
 }
 #popup form > button{
-    /* for normal Popups */
     width: 80%;
+    margin-top: 20px;
 }
-#popup form > div > button{
-    /* for create event popup (special case - with comment for contact input) */
+#popup form #create-event{
     width: 100%;
+    margin-top: 20px;
 }
 #popup form button{
     height: 30px;
     border-radius: 8px;
     border: none;
     background-color: var(--white1);
-    margin-top: 30px;
     font-family: inherit;
     transition: transform 0.3s ease-in-out,
                 background-color 0.3s ease-in-out;
@@ -91,17 +90,26 @@
     transform: scaleY(1.1);
     background-color: var(--white3);
 }
-#popup form #btn-container{
-    height: fit-content;
+#popup form #outer-btn-container{
     width: 80%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    gap: 10px !important;
+}
+#popup form #outer-btn-container > button{
+    width: 100%;
+}
+#popup form #inner-btn-container{
+    height: fit-content;
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     gap: 10px;
 }
-#popup form #delete-event, #popup form #lock-attendance{
+#popup form #inner-btn-container > button{
     width: 50%;
-    margin-top: 10px;
     border: solid var(--false) 3px;
 }
 #popup form #delete-event{
@@ -111,6 +119,11 @@
 #popup form #lock-attendance{
     background-color: var(--white3);
     color: var(--false);
+}
+#popup form #export-csv{
+    background-color: transparent;
+    color: var(--true);
+    border: solid var(--true) 3px;
 }
 @media(max-width:750px){
     #popup form label p{

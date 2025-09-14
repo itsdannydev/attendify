@@ -23,7 +23,7 @@ export function createEventTemplate(type,event){
                         <input id="contact" class="popup-inputs" type="text" required>
                         <p>*This contact will be used in case you forgot any of the passwords</p>
                     </label>
-                    <button type="submit">CREATE NEW EVENT</button>
+                    <button id="create-event" type="submit">CREATE NEW EVENT</button>
                 </div>
             `
 
@@ -51,10 +51,13 @@ export function createEventTemplate(type,event){
                         <input disabled class="popup-inputs" type="text" value="*Contact of an event can't be edited">
                     </label>
                 </div>
-                <button type="submit">SAVE CHANGES</button>
-                <div id="btn-container">
-                    <button type="button" id="lock-attendance">${(event.attendanceLocked)?"UNLOCK":"LOCK"} ATTENDANCE</button>
-                    <button type="button" id="delete-event">DELETE EVENT</button>
+                <div id="outer-btn-container">
+                    <button type="submit">SAVE CHANGES</button>
+                    <div id="inner-btn-container">
+                        <button type="button" id="lock-attendance">${(event.attendanceLocked)?"UNLOCK":"LOCK"} ATTENDANCE</button>
+                        <button type="button" id="delete-event">DELETE EVENT</button>
+                    </div>
+                    <button type="button" id="export-csv">EXPORT AS CSV</button>
                 </div>
             `
             

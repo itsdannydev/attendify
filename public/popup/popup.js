@@ -134,4 +134,34 @@ export function showPopup(type,event){
             }
         });
     }
+    //-----------------------EXPORT AS CSV-----------------------
+    const exportCsv = document.getElementById('export-csv');
+    if(exportCsv){
+        exportCsv.addEventListener('click',async ()=>{
+            try{
+                const res = await fetch('/export-csv');
+                const data = await res.json();
+                if(!data.success){
+                    notify(data.message);
+                    return;
+                }
+                notify(data.message);
+
+                const blob = new Blob([data.file],{ type:'text/csv' });
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                const fileName = event.title.replace(/\s+/g,'_');
+                a.download = `${fileName}_participants.csv`;
+                a.click();
+                a.remove();
+                window.URL.revokeObjectURL(url);
+
+                notify("Successfully exported CSV file");
+            }catch(err){
+                console.log(err.message);
+                notify("Error exporting CSV file");
+            }
+        });
+    }
 }
