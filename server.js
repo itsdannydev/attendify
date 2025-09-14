@@ -30,6 +30,23 @@ app.get('/attendance/:id',verifyAuth,(req,res)=>{
 
 //--------------------------------API ENDPOINTS--------------------------------
 const Event = require('./models/Event');
+//DELETE Request
+app.delete('/delete-event', async (req,res)=>{
+    const token = req.cookies.authCookie;
+    try{
+        const payload = jwt.verify(token, process.env.JWT_SECRET);
+        const id = payload.eventId;
+        
+        const event = await Event.findOne({ id });
+        const title = event.title;
+
+        await Event.deleteOne({ id });
+        res.json({ success:true,message:`Successfully Deleted Event "${title} (${id})"`} );
+    }catch(err){
+        console.log(err.message);
+        res.json({ success:false,message:`Error Deleting Event: ${err.message}` });
+    }
+});
 //GET Requests
 app.get('/events-data',async (req,res)=>{
     try{

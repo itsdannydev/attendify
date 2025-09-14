@@ -1,5 +1,7 @@
 import { createEventTemplate } from "./templates.js";
 import { handleCreate, handleEdit, handleAdminAuth, handleAuth } from './popupHandler.js';
+import { notify } from "../global.js";
+import { getEvents } from "../index.js";
 
 //global DOM elems
 const popupBg = document.getElementById('popup-bg');
@@ -84,5 +86,28 @@ export function showPopup(type,event){
             isSubmitting = false;
         }
 
+    }
+
+    // ----------------------DELETE EVENT----------------------
+    const deleteEvent = document.getElementById('delete-event');
+    if(deleteEvent){
+        deleteEvent.addEventListener('click',async ()=>{
+            const confirmed = confirm("Are you sure you want to delete this event?\nThis action cannot be reversed");
+            if (!confirmed) return;
+            try{
+                const res = await fetch('/delete-event',{
+                    method: 'DELETE',
+                    credentials: 'include'
+                });
+
+                const data = await res.json();
+                notify(data.message);
+                closePopup();
+                getEvents();
+            }catch(err){
+                console.log("Error Deleting Event: ",err.message);
+                notify("Error Deleting Event");
+            }
+        })
     }
 }

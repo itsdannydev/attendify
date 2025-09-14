@@ -52,6 +52,7 @@ export function createEventTemplate(type,event){
                     </label>
                 </div>
                 <button type="submit">SAVE CHANGES</button>
+                <button type="button" id="delete-event">DELETE EVENT</button>
             `
             
             break;
