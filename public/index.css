@@ -17,6 +17,7 @@ body{
     min-height: 0;
 }
 #events-header{
+    position: relative;
     height: 50px;
     display: flex;
     justify-content: space-between;
@@ -179,4 +180,15 @@ body{
 }
 .attendance:hover{
     background-color: hsl(240, 100%, 70%);
+}
+@media(max-width: 750px){
+    #events-header{
+        padding-bottom: 50px;
+    }
+    #search-events{
+        position: absolute;
+        margin: 0;
+        width: 100%;
+        bottom: 0px;
+    }
 }

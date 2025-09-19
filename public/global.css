@@ -44,6 +44,12 @@ nav a{
 .hide{
     display: none !important;
 }
+@media(max-width: 750px){
+  nav{
+    font-size: 1.7rem;
+  }
+}
+
 /* Scroll bar redesign */
 *::-webkit-scrollbar {
     width: 15px;
