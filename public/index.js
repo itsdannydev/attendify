@@ -48,7 +48,7 @@ createEventCard.addEventListener('click',()=>{
 function showEvents(events){
     const eventsBody = document.getElementById('events-body');
     eventsBody.innerHTML='';
-        events.forEach( event => {
+        events.slice().reverse().forEach( event => {
             /*
                 CHANGED. COMMENT NOT DELETED JUST FOR FUTURE NOTES.
                 (OLD)If ever the db accumulates 1000+ events, this approach will get slower,
