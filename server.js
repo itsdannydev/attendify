@@ -1,9 +1,14 @@
 const express = require('express');
-const app = express();
 const connectDB = require('./mongodb');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const Papa = require('papaparse');
+const { Server } = require('socket.io');
+const http = require('http');
+
+const app = express();
+const server = http.createServer(app);
+const io = new Server(server);
 
 connectDB();
 
@@ -297,6 +302,11 @@ app.post('/attendance-trigger',verifyAuth, isAttendanceLocked,async (req,res)=>{
         participant.present = attendance;
         await event.save();
 
+        io.emit('attendanceUpdated',{ 
+            regno:participant.regno, 
+            attendance:participant.present 
+        });
+
         res.json({ 
             success:true,
             message:`${participant.name}(${participant.regno}) marked as ${(attendance)?"present":"absent"}`
@@ -332,8 +342,15 @@ app.post('/isAttendanceLocked',async (req,res)=>{
     } 
 })
 
+io.on('connection',(socket)=>{
+    console.log('A user is connected');
+
+    socket.on('disconnect',()=>{
+        console.log('User disconnected');
+    });
+});
 
 const port = 3000
-app.listen(port, ()=>{
+server.listen(port, ()=>{
     console.log("Server is running at port: ",port);
 });

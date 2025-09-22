@@ -1,5 +1,20 @@
 import { notify } from "./global.js";
 
+const socket = io();
+socket.on('attendanceUpdated',({ regno, attendance }) =>{
+    const pIndex = fullParticipants.findIndex(p=>p.regno === regno);
+    if(pIndex !== -1){
+        fullParticipants[pIndex].present = attendance;
+    }
+
+    const checkbox = document.getElementById(regno);
+    if(checkbox){
+        checkbox.checked = attendance;
+    }
+
+    console.log('Attendance updated via socket');
+})
+
 let fullParticipants = [];
 let currParticipants = [];
 let currFilter = 'nofilter';
